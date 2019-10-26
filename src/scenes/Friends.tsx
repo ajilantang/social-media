@@ -1,12 +1,12 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-const Home = () => {
+const Friends = () => {
   return (
     <View>
-      <Text>ini Home</Text>
+      <Text>ini Friends</Text>
     </View>
   );
 };
 
-export default Home;
+export default Friends;

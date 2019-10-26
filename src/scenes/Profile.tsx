@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
-
-const Profile = () => {
+type Props = { id?: string };
+const Profile = (props: Props) => {
   return <View></View>;
 };
 
