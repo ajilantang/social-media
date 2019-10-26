@@ -91,7 +91,7 @@ function pathMatching(title: string) {
     return {
       title: "Home",
       icon: <Home />,
-      navigation: () => navigate("/home")
+      navigation: () => navigate("/")
     };
   } else if (title === "/profile" || title === "Profile") {
     return {
