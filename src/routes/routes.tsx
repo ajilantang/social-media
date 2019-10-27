@@ -22,11 +22,6 @@ const routes = {
       <HomeComponent />
     </LazyComponent>
   ),
-  "/profile/:id": ({ id }: any) => (
-    <LazyComponent>
-      <ProfileComponent id={id} />
-    </LazyComponent>
-  ),
   "/profile": () => (
     <LazyComponent>
       <ProfileComponent />

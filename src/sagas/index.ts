@@ -1,16 +1,14 @@
-import { put, takeLatest, all } from "redux-saga/effects";
+import post from "./post";
+import user from "./user";
+import comment from "./comments";
+import album from "./albums";
+import photo from "./photos";
 
-import { get } from "../helpers/fetch";
-import { Posts } from "../types/post";
-function* fetchNews() {
-  const { parsedBody } = yield get<Posts>(
-    "https://jsonplaceholder.typicode.com/posts"
-  );
-  yield put({ type: "POST_RECEIVED", payload: parsedBody });
-}
-function* actionWatcher() {
-  yield takeLatest("POST_REQUESTED", fetchNews);
-}
+import { fork } from "redux-saga/effects";
 export default function* rootSaga() {
-  yield all([actionWatcher()]);
+  yield fork(post);
+  yield fork(user);
+  yield fork(comment);
+  yield fork(photo);
+  yield fork(album);
 }

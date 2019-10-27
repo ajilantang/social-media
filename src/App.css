@@ -20,3 +20,9 @@
 .App-link {
   color: #09d3ac;
 }
+
+.editorClassName {
+  border-width: 1;
+  background-color: #d3d3d3;
+  padding: 100;
+}
