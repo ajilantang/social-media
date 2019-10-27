@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
+import htmlToDraft from "html-to-draftjs";
+
 import User from "./User";
 import Comment from "./Comment";
 import { Post } from "../types/post";

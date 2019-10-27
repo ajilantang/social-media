@@ -1,34 +1,41 @@
-import React, { useEffect, Suspense, useState } from "react";
-import { View, Text, TextInput, StyleSheet, FlatList } from "react-native";
+import React, { useEffect, Suspense, useState, ChangeEvent } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  FlatList,
+  Button
+} from "react-native";
 import { connect } from "react-redux";
 import { Posts } from "../types/post";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { EditorState } from "draft-js";
+
 import PostComponenet from "../components/Post";
 const Home = ({
   post,
   isLoading,
   getPost,
-  getUsers,
   getComments
 }: {
   post: Posts;
   isLoading: boolean;
   getPost: () => void;
-  getUsers: () => void;
   getComments: () => void;
 }) => {
   useEffect(() => {
     getPost();
-    getUsers();
     getComments();
   }, []);
-  let [editorState, onEditorStateChange] = useState(EditorState.createEmpty());
-  let _onEditorStateChange = (editorState: EditorState) => {
+  let [editorState, onEditorStateChange] = useState("");
+  let [title, onEditTitle] = useState("");
+
+  let _onEditorStateChange = (editorState: string) => {
     onEditorStateChange(editorState);
   };
-  console.log("postt", post);
+  let handleChange = () => {
+    // this.setState({ value: event.target.value });
+    console.log("taik");
+  };
   if (isLoading) {
     // todo : using loading component
     return <Text>Loading ....</Text>;
@@ -40,18 +47,34 @@ const Home = ({
           padding: 10
         }}
       >
-        <Editor
-          editorStyle={{ borderColor: "blue" }}
-          wrapperStyle={{
-            borderWidth: 1,
+        <TextInput
+          style={{
+            borderWidth: StyleSheet.hairlineWidth,
+            padding: 10,
+            marginBottom: 10,
             borderColor: "#d3d3d3"
           }}
-          editorState={editorState}
-          toolbarClassName="toolbarClassName"
-          wrapperClassName="wrapperClassName"
-          editorClassName="editorClassName"
-          onEditorStateChange={_onEditorStateChange}
+          value={title}
+          placeholder="title"
+          onChangeText={onEditTitle}
         />
+
+        <textarea
+          onChange={e => {
+            onEditorStateChange(e.currentTarget.value);
+          }}
+          value={editorState}
+          style={{
+            borderWidth: StyleSheet.hairlineWidth,
+            padding: 10,
+            borderColor: "#d3d3d3",
+            height: 100
+          }}
+          placeholder="Write post here ..."
+        />
+        <View style={{ alignItems: "flex-end", marginTop: 10 }}>
+          <Button title="Submit" onPress={() => {}} />
+        </View>
       </View>
       <FlatList
         data={post}
@@ -71,15 +94,11 @@ const mapStateToProps = (state: State) => ({
 const getPost = () => ({
   type: "POST_REQUESTED"
 });
-const getUsers = () => ({
-  type: "USER_REQUESTED"
-});
 const getComments = () => ({
   type: "COMMENT_REQUESTED"
 });
 const mapDispatchToProps = {
   getPost: getPost,
-  getUsers: getUsers,
   getComments: getComments
 };
 

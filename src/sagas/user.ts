@@ -1,4 +1,4 @@
-import { put, takeEvery, all } from "redux-saga/effects";
+import { put, takeEvery, takeLatest, all } from "redux-saga/effects";
 
 import { get } from "../helpers/fetch";
 import { Users } from "../types/users";

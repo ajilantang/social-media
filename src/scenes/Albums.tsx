@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, FlatList } from "react-native";
+import { View, FlatList, Text } from "react-native";
 import { connect } from "react-redux";
 import { Albums as AlbumsProps } from "../types/albums";
 import AlbumItem from "../components/Albums";
@@ -8,22 +8,33 @@ import Hoverable from "../components/Hoverable";
 const Albums = ({
   albums,
   isLoading,
-  getAlbums,
-  getPhotos
+  getAlbums
 }: {
   albums: AlbumsProps;
   isLoading: boolean;
   getAlbums: () => void;
-  getPhotos: () => void;
 }) => {
   useEffect(() => {
-    getPhotos();
     getAlbums();
   }, []);
+  if (isLoading) {
+    return <Text>Loading.....</Text>;
+  }
   return (
     <FlatList
       data={albums}
-      renderItem={({ item }) => <AlbumItem {...item} />}
+      renderItem={({ item }) => (
+        <Hoverable
+          render={(isHovered, eventHandlers) => (
+            <View {...eventHandlers}>
+              <AlbumItem
+                album={item}
+                style={isHovered && { backgroundColor: "#add8e6" }}
+              />
+            </View>
+          )}
+        />
+      )}
       keyExtractor={item => `${item.id}`}
     />
   );
@@ -38,14 +49,9 @@ const mapStateToProps = (state: State) => ({
 const getAlbums = () => ({
   type: "ALBUM_REQUESTED"
 });
-const getPhotos = () => ({
-  type: "PHOTO_REQUESTED"
+const mapDispatchToProps = (dispatch: Function) => ({
+  getAlbums: () => dispatch(getAlbums())
 });
-
-const mapDispatchToProps = {
-  getAlbums: getAlbums,
-  getPhotos: getPhotos
-};
 
 let AlbumsWrapper = connect(
   mapStateToProps,

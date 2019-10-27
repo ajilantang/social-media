@@ -40,7 +40,7 @@ const UserComponent = ({ id: user_id, users }: Props) => {
 };
 type State = { users: { users: Users; loading: boolean } };
 let mapStateToProps = (state: State) => {
-  return { users: state.users.users, comment: [] };
+  return { users: state.users.users };
 };
 let userContainer = connect(
   mapStateToProps,

@@ -1,7 +1,8 @@
 import { Users } from "../types/users";
 type Action = {
-  type: "USER_REQUESTED" | "USER_RECEIVED";
+  type: "USER_REQUESTED" | "USER_RECEIVED" | "USER_BY_ID";
   payload: Users;
+  id?: number;
 };
 const defaultState: { loading: boolean; users: Users } = {
   loading: false,
@@ -13,6 +14,10 @@ const reducer = (state = defaultState, action: Action) => {
       return { ...state, loading: true };
     case "USER_RECEIVED":
       return { ...state, users: action.payload, loading: false };
+    case "USER_BY_ID": {
+      let user = state.users.filter(({ id }) => id === 1);
+      return { ...state, users: user, loading: false };
+    }
     default:
       return state;
   }

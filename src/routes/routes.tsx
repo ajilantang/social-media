@@ -8,6 +8,7 @@ const PageNotFoundComponent = React.lazy(() =>
 );
 const AlbumsComponent = React.lazy(() => import("../scenes/Albums"));
 const FriendsComponent = React.lazy(() => import("../scenes/Friends"));
+const AlbumsDetail = React.lazy(() => import("../scenes/AlbumDetail"));
 
 function LazyComponent({ children }: { children: ReactNode }) {
   return (
@@ -22,14 +23,19 @@ const routes = {
       <HomeComponent />
     </LazyComponent>
   ),
-  "/profile": () => (
+  "/profile/:id": ({ id }: any) => (
     <LazyComponent>
-      <ProfileComponent />
+      <ProfileComponent id={id} />
     </LazyComponent>
   ),
   "/albums": () => (
     <LazyComponent>
       <AlbumsComponent />
+    </LazyComponent>
+  ),
+  "/album_photo/:id": ({ id }: any) => (
+    <LazyComponent>
+      <AlbumsDetail albumId={id} />
     </LazyComponent>
   ),
   "/friends": () => (
