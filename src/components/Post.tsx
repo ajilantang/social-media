@@ -20,17 +20,17 @@ const PostComponenet = (
       email: string;
       body: string;
     }) => void;
-    removeComment: (id: number) => void;
+    removePost: (id: number) => void;
   }
 ) => {
-  let { title, body, userId, id, addComment, removeComment } = props;
+  let { title, body, userId, id, addComment, removePost } = props;
   let [comment, onComment] = useState("");
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={{ position: "absolute", top: 10, right: 10, width: 20 }}
         onPress={() => {
-          removeComment(id);
+          removePost(id);
         }}
       >
         <Text style={{ fontWeight: "bold", color: "red" }}>X</Text>
@@ -84,14 +84,14 @@ const addComment = (body: {
   type: "ADD_COMMENT_REQUESTED",
   body: body
 });
-const removeComment = (id: number) => ({
+const removePost = (id: number) => ({
   type: "REMOVED_POST_REQUESTED",
   id: id
 });
 const mapDispatchToProps = (dispatch: Function) => {
   return {
-    removeComment: (id: number) => {
-      return dispatch(removeComment(id));
+    removePost: (id: number) => {
+      return dispatch(removePost(id));
     },
     addComment: (body: {
       postId: number;

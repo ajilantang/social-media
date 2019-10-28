@@ -25,13 +25,30 @@ function* addComment(action: any) {
   }
 }
 
+function* removeComment(action: any) {
+  try {
+    yield fetch("https://jsonplaceholder.typicode.com/comments/" + action.id, {
+      method: "DELETE"
+    });
+    yield put({
+      type: "REMOVED_COMMENT_RECEIVED",
+      id: action.id
+    });
+  } catch (error) {
+    console.log("errror", error);
+  }
+}
+
 function* addCommentWatcher() {
   yield takeLatest("ADD_COMMENT_REQUESTED", addComment);
+}
+function* removeCommentWatcher() {
+  yield takeLatest("REMOVE_COMMENT_REQUESTED", removeComment);
 }
 function* actionWatcher() {
   yield takeLatest("COMMENT_REQUESTED", fetchComment);
 }
 
 export default function* rootSaga() {
-  yield all([actionWatcher(), addCommentWatcher()]);
+  yield all([actionWatcher(), addCommentWatcher(), removeCommentWatcher()]);
 }

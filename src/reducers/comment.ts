@@ -1,8 +1,13 @@
 import { Comments, Comment } from "../types/comment";
 type Action = {
-  type: "COMMENT_REQUESTED" | "COMMENT_RECEIVED" | "ADD_COMMENT_RECEIVED";
+  type:
+    | "COMMENT_REQUESTED"
+    | "COMMENT_RECEIVED"
+    | "ADD_COMMENT_RECEIVED"
+    | "REMOVED_COMMENT_RECEIVED";
   payload: Comments;
   newPost: Comment;
+  id: number;
 };
 const defaultState: { loading: boolean; comments: Comments } = {
   loading: false,
@@ -19,6 +24,14 @@ const reducer = (state = defaultState, action: Action) => {
       return {
         ...state,
         comments: state.comments.concat(newPost),
+        loading: false
+      };
+    }
+    case "REMOVED_COMMENT_RECEIVED": {
+      let newPost = state.comments.filter(({ id }) => id !== action.id);
+      return {
+        ...state,
+        comments: newPost,
         loading: false
       };
     }
