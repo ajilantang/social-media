@@ -1,4 +1,16 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## TODO LIST
+User can view list of users
+
+- [X]  User can view list of posts of each user
+- [X]  User can view list of albums of each user
+- [X]  User can view the detail of each post and its comment
+- [X]  User can view list of photos from an album
+- [X]  User can view the detail of photo
+- [X]  User can add and delete post
+- [X]  User can add and delete comment
+- [ ]  User can edit post
+- [ ]  User can edit comment
 
 ## Available Scripts
 
@@ -42,3 +54,5 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
