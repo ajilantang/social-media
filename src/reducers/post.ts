@@ -14,7 +14,6 @@ const defaultState: { loading: boolean; post: Posts } = {
   post: []
 };
 const reducer = (state = defaultState, action: Action) => {
-  console.log("action", action.type);
   switch (action.type) {
     case "POST_REQUESTED":
       return { ...state, loading: true };
