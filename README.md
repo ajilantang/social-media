@@ -26,6 +26,7 @@ User can view list of users
  "redux-logger": "^3.0.6",
  "redux-saga": "^1.1.1",
  "typescript": "3.6.4"
+ "react-native-web":"^0.11.7",,
 ```
 
 Type script for static type 
