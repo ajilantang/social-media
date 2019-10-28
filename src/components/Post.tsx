@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity
+} from "react-native";
 import { connect } from "react-redux";
 
 import User from "./User";
@@ -14,12 +20,21 @@ const PostComponenet = (
       email: string;
       body: string;
     }) => void;
+    removeComment: (id: number) => void;
   }
 ) => {
-  let { title, body, userId, id, addComment } = props;
+  let { title, body, userId, id, addComment, removeComment } = props;
   let [comment, onComment] = useState("");
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        style={{ position: "absolute", top: 10, right: 10, width: 20 }}
+        onPress={() => {
+          removeComment(id);
+        }}
+      >
+        <Text style={{ fontWeight: "bold", color: "red" }}>X</Text>
+      </TouchableOpacity>
       <User id={userId} />
       <Text style={{ fontWeight: "900", marginBottom: 5 }}>{title}</Text>
       <Text>{body}</Text>
@@ -69,14 +84,23 @@ const addComment = (body: {
   type: "ADD_COMMENT_REQUESTED",
   body: body
 });
+const removeComment = (id: number) => ({
+  type: "REMOVED_POST_REQUESTED",
+  id: id
+});
 const mapDispatchToProps = (dispatch: Function) => {
   return {
+    removeComment: (id: number) => {
+      return dispatch(removeComment(id));
+    },
     addComment: (body: {
       postId: number;
       name: string;
       email: string;
       body: string;
-    }) => dispatch(addComment(body))
+    }) => {
+      return dispatch(addComment(body));
+    }
   };
 };
 let PostComponenetWrapper = connect(
