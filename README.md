@@ -14,6 +14,7 @@ User can view list of users
 
 ## Progress 
 
+![28 Oct 2019 10 22 19](https://user-images.githubusercontent.com/20268062/67649875-5ab3e000-f96d-11e9-8a6e-b6f898526b23.gif)
 
 ## Available Scripts
 
