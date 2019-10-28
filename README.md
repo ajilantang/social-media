@@ -1,4 +1,165 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## REPO TREE
+```
+.
+├── App.css
+├── App.test.tsx
+├── App.tsx
+├── components
+│   ├── Albums.tsx
+│   ├── Comment.tsx
+│   ├── Hoverable.tsx
+│   ├── NavBar.tsx
+│   ├── Post.tsx
+│   └── User.tsx
+├── global.d.ts
+├── helpers
+│   └── fetch.ts
+├── index.css
+├── index.tsx
+├── logo.svg
+├── react-app-env.d.ts
+├── reducers
+│   ├── album.ts
+│   ├── comment.ts
+│   ├── index.ts
+│   ├── photos.ts
+│   ├── post.ts
+│   └── user.ts
+├── routes
+│   └── routes.tsx
+├── sagas
+│   ├── albums.ts
+│   ├── comments.ts
+│   ├── index.ts
+│   ├── photos.ts
+│   ├── post.ts
+│   └── user.ts
+├── scenes
+│   ├── AlbumDetail.tsx
+│   ├── Albums.tsx
+│   ├── Friends.tsx
+│   ├── Home.tsx
+│   ├── PageNotFound.tsx
+│   ├── Profile.tsx
+│   └── index.ts
+├── serviceWorker.ts
+└── types
+    ├── albums.ts
+    ├── comment.ts
+    ├── photos.ts
+    ├── post.ts
+    └── users.ts
+```
+
+### Hoverable
+
+```javascript
+ype MouseEventHandler = (mouse: MouseEvent) => void;
+
+type EventHandlers = {
+  onMouseEnter: MouseEventHandler;
+  onMouseLeave: MouseEventHandler;
+};
+
+type Props = {
+  render: (isHovered: boolean, eventHandlers: EventHandlers) => ReactNode;
+  hoverStyle?: StyleSheet;
+};
+
+```
+### USEAGE
+
+```javascript
+ <Hoverable
+          render={(isHovered, eventHandlers) => (
+            <View {...eventHandlers}>
+              <AlbumItem
+                album={item}
+                style={isHovered && { backgroundColor: "#add8e6" }}
+              />
+            </View>
+          )}
+        />
+
+// isHovered return true when moose enter view 
+```
+### CONSUME API
+
+```
+export interface IHttpResponse<T> extends Response {
+  parsedBody?: T;
+}
+
+export const http = <T>(request: RequestInfo): Promise<IHttpResponse<T>> => {
+  return new Promise((resolve, reject) => {
+    let response: IHttpResponse<T>;
+    fetch(request)
+      .then(res => {
+        response = res;
+        return res.json();
+      })
+      .then(body => {
+        if (response.ok) {
+          response.parsedBody = body;
+          resolve(response);
+        } else {
+          reject(response);
+        }
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
+
+export const get = async <T>(
+  path: string,
+  args: RequestInit = { method: "get" }
+): Promise<IHttpResponse<T>> => {
+  return await http<T>(new Request(path, args));
+};
+
+export const post = async <T>(
+  path: string,
+  body: any,
+  args: RequestInit = { method: "post", body: JSON.stringify(body) }
+): Promise<IHttpResponse<T>> => {
+  return await http<T>(new Request(path, args));
+};
+
+export const put = async <T>(
+  path: string,
+  body: any,
+  args: RequestInit = { method: "put", body: JSON.stringify(body) }
+): Promise<IHttpResponse<T>> => {
+  return await http<T>(new Request(path, args));
+};
+
+```
+
+### Navigation 
+
+[HookRouter](https://github.com/Paratron/hookrouter#readme)
+
+### Management State
+
+Redux and middleware redux-saga
+
+### Typing 
+
+TypeScript
+
+### Others 
+
+[React native web](https://github.com/necolas/react-native-web)
+Material ui 
+
+### Need To improve 
+
+Some state need to render local(refactor some component like text input at home ) and implement suspense for some componenet would be awesome 
+
+ 
 ## TODO LIST
 User can view list of users
 
