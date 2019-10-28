@@ -11,31 +11,27 @@ import { connect } from "react-redux";
 import { Posts } from "../types/post";
 
 import PostComponenet from "../components/Post";
-const Home = ({
-  post,
-  isLoading,
-  getPost,
-  getComments
-}: {
+type HomeProps = {
   post: Posts;
   isLoading: boolean;
   getPost: () => void;
   getComments: () => void;
-}) => {
+  addPost: (body: { title: string; body: string; userId: number }) => void;
+};
+const Home = ({
+  post,
+  isLoading,
+  getPost,
+  getComments,
+  addPost
+}: HomeProps) => {
   useEffect(() => {
     getPost();
     getComments();
   }, []);
-  let [editorState, onEditorStateChange] = useState("");
+  let [body, onBodyChange] = useState("");
   let [title, onEditTitle] = useState("");
 
-  let _onEditorStateChange = (editorState: string) => {
-    onEditorStateChange(editorState);
-  };
-  let handleChange = () => {
-    // this.setState({ value: event.target.value });
-    console.log("taik");
-  };
   if (isLoading) {
     // todo : using loading component
     return <Text>Loading ....</Text>;
@@ -61,9 +57,9 @@ const Home = ({
 
         <textarea
           onChange={e => {
-            onEditorStateChange(e.currentTarget.value);
+            onBodyChange(e.currentTarget.value);
           }}
-          value={editorState}
+          value={body}
           style={{
             borderWidth: StyleSheet.hairlineWidth,
             padding: 10,
@@ -73,13 +69,22 @@ const Home = ({
           placeholder="Write post here ..."
         />
         <View style={{ alignItems: "flex-end", marginTop: 10 }}>
-          <Button title="Submit" onPress={() => {}} />
+          <Button
+            title="Submit"
+            onPress={() => {
+              addPost({ title, body, userId: 1 });
+              onBodyChange("");
+              onEditTitle("");
+            }}
+          />
         </View>
       </View>
       <FlatList
         data={post}
         renderItem={({ item }) => <PostComponenet {...item} />}
-        keyExtractor={item => `${item.id}`}
+        keyExtractor={item => {
+          return `${item.id}`;
+        }}
       />
     </View>
   );
@@ -97,9 +102,18 @@ const getPost = () => ({
 const getComments = () => ({
   type: "COMMENT_REQUESTED"
 });
-const mapDispatchToProps = {
-  getPost: getPost,
-  getComments: getComments
+
+const addPost = (body: { title: string; body: string; userId: number }) => ({
+  type: "ADD_POST_REQUESTED",
+  body: body
+});
+const mapDispatchToProps = (dispatch: Function) => {
+  return {
+    getPost: () => dispatch(getPost()),
+    getComments: () => dispatch(getComments()),
+    addPost: (body: { title: string; body: string; userId: number }) =>
+      dispatch(addPost(body))
+  };
 };
 
 let HomeWrapper = connect(

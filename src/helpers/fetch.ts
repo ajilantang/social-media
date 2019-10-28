@@ -36,6 +36,7 @@ export const post = async <T>(
   body: any,
   args: RequestInit = { method: "post", body: JSON.stringify(body) }
 ): Promise<IHttpResponse<T>> => {
+  console.log("bodyyyy saya", body);
   return await http<T>(new Request(path, args));
 };
 

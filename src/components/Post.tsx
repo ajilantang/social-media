@@ -1,12 +1,22 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
-import htmlToDraft from "html-to-draftjs";
+import { connect } from "react-redux";
 
 import User from "./User";
 import Comment from "./Comment";
 import { Post } from "../types/post";
-const PostComponenet = (props: Post) => {
-  let { title, body, userId, id } = props;
+
+const PostComponenet = (
+  props: Post & {
+    addComment: (body: {
+      postId: number;
+      name: string;
+      email: string;
+      body: string;
+    }) => void;
+  }
+) => {
+  let { title, body, userId, id, addComment } = props;
   let [comment, onComment] = useState("");
   return (
     <View style={styles.container}>
@@ -28,7 +38,12 @@ const PostComponenet = (props: Post) => {
         numberOfLines={10}
         onKeyPress={({ nativeEvent: { key: keyValue } }) => {
           if (keyValue === "Enter") {
-            // Todo sent to api
+            addComment({
+              postId: id,
+              name: "anonymous",
+              email: "anonymous",
+              body: comment
+            });
             onComment("");
           }
         }}
@@ -45,4 +60,27 @@ const styles = StyleSheet.create({
     marginVertical: 5
   }
 });
-export default PostComponenet;
+const addComment = (body: {
+  postId: number;
+  name: string;
+  email: string;
+  body: string;
+}) => ({
+  type: "ADD_COMMENT_REQUESTED",
+  body: body
+});
+const mapDispatchToProps = (dispatch: Function) => {
+  return {
+    addComment: (body: {
+      postId: number;
+      name: string;
+      email: string;
+      body: string;
+    }) => dispatch(addComment(body))
+  };
+};
+let PostComponenetWrapper = connect(
+  null,
+  mapDispatchToProps
+)(PostComponenet);
+export default PostComponenetWrapper;

@@ -30,7 +30,7 @@ const CommentComponent = ({ id: post_id, comments }: Props) => {
   if ((comments && !comments.length) || !comments) {
     return <View style={{ marginVertical: 5 }} />;
   }
-  let listComment = comments.filter(({ id }) => post_id === id);
+  let listComment = comments.filter(({ postId }) => post_id === postId);
   if (!listComment.length) {
     return <View style={{ marginVertical: 5 }} />;
   }
