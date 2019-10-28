@@ -16,6 +16,23 @@ User can view list of users
 
 ![28 Oct 2019 10 22 19](https://user-images.githubusercontent.com/20268062/67649875-5ab3e000-f96d-11e9-8a6e-b6f898526b23.gif)
 
+## Dependencies
+```
+ "hookrouter": "^1.2.3",
+ "react": "^16.11.0",
+ "react-dom": "^16.11.0",
+ "react-redux": "^7.1.1",
+ "react-scripts": "3.2.0",
+ "redux-logger": "^3.0.6",
+ "redux-saga": "^1.1.1",
+ "typescript": "3.6.4"
+```
+
+Type script for static type 
+redux for managment store 
+saga for middleware 
+hookrouter for routing 
+
 ## Available Scripts
 
 In the project directory, you can run:
